@@ -74,9 +74,10 @@ def DP_costFunction(stock, iteration = 0):
 
     possibleOrders = [i for i in range(capacity+1)]
 
-    expectedCosts = []
+    OptimalCosts = [0]
 
     for orders in possibleOrders:
+        
         func1 = lambda x: costFunction(stock, orders, x)
         func2 = lambda x: DP_costFunction(stock + orders - x, iteration = iteration + 1)[0] if iteration < N else 0
         expectedCost = demand.expect(func1) + demand.expect(func2)
