@@ -7,7 +7,7 @@ import scipy.stats as ss
 # quantization function
 
 def quantize(val, binSize):
-    newVal = binSize * np.round(val/binSize)
+    newVal = binSize * np.floor(val/binSize)
     return int(newVal)
 
 def holdingCost(stock, orders):

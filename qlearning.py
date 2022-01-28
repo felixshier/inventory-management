@@ -5,7 +5,7 @@ from functions import *
 def generateQtable(capacity, demand, alpha, gamma, epsilon, iterations, bin_size):
 
     # initialize spaces
-    state_space = [quantize(i, bin_size) for i in range(capacity + 1)]
+    state_space = [int(i * bin_size) for i in range(int(np.ceil(capacity/bin_size)) + 1)]
     action_space = [i for i in range(capacity + 1)]
     noise_space = demand
 
@@ -42,16 +42,16 @@ def generateQtable(capacity, demand, alpha, gamma, epsilon, iterations, bin_size
         next_state = quantize(next_state, bin_size)
 
         # estimate optimal future value
-        next_min = np.min(q_table[next_state])
+        next_min = np.min(q_table[state_space.index(next_state)])
 
         # get old value
-        old_value = q_table[state, action]
+        old_value = q_table[state_space.index(state), action]
 
         # calculate new value
         new_value = ((1 - alpha) * old_value) + alpha * (cost + (gamma * next_min))
 
         # save new value
-        q_table[state, action] = new_value
+        q_table[state_space.index(state), action] = new_value
 
         # go to next state
         state = next_state
